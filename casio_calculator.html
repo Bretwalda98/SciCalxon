@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Casio‑Style Scientific Calculator</title>
+  <style>
+    /* --- Reset & Layout -------------------------------------------------- */
+    *, *::before, *::after { box-sizing: border-box; }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #f3f4f6;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    /* --- Calculator Shell ------------------------------------------------ */
+    .calculator {
+      background: #1f2937; /* slate‑800 */
+      border-radius: 1.25rem; /* 2xl */
+      padding: 1.5rem;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.35);
+      width: 420px;
+    }
+
+    /* --- Display --------------------------------------------------------- */
+    #display {
+      background: #000;
+      color: #4ade80; /* lime‑400 */
+      font-size: 2rem;
+      line-height: 2.5rem;
+      padding: 0.75rem 1rem;
+      border-radius: 0.75rem;
+      text-align: right;
+      height: 3rem;
+      overflow-x: auto;
+      white-space: nowrap;
+    }
+
+    /* --- Grid of Buttons ------------------------------------------------- */
+    .buttons {
+      margin-top: 1.25rem;
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 0.5rem;
+    }
+
+    button {
+      position: relative;
+      font-size: 1rem;
+      padding: 0.9rem 0.25rem;
+      border: none;
+      border-radius: 0.75rem;
+      cursor: pointer;
+      user-select: none;
+      transition: transform 0.06s ease;
+    }
+
+    button:active { transform: translateY(2px); }
+
+    /* --- Color Coding ---------------------------------------------------- */
+    .num        { background: #e5e7eb; } /* gray‑200 */
+    .op         { background: #f97316; color: #fff; } /* orange‑500 */
+    .func       { background: #4b5563; color: #f1f5f9; } /* gray‑600 */
+    .const      { background: #334155; color: #fff; } /* slate‑700 */
+    .control    { background: #ef4444; color: #fff; } /* red‑500 */
+    .equal      { background: #0ea5e9; color: #fff; grid-column: span 2; } /* sky‑500 */
+    .toggle     { background: #10b981; color: #fff; } /* emerald‑500 */
+  </style>
+</head>
+<body>
+  <div class="calculator">
+    <div id="display">0</div>
+
+    <div class="buttons">
+      <!-- Row 1 -->
+      <button class="control" data-action="clear">AC</button>
+      <button class="control" data-action="del">DEL</button>
+      <button class="op" data-value="(">(</button>
+      <button class="op" data-value=")">)</button>
+      <button class="const" data-value="π">π</button>
+      <button class="const" data-value="e">e</button>
+
+      <!-- Row 2 -->
+      <button class="func" data-value="sin(">sin</button>
+      <button class="func" data-value="cos(">cos</button>
+      <button class="func" data-value="tan(">tan</button>
+      <button class="func" data-value="ln(">ln</button>
+      <button class="func" data-value="log(">log</button>
+      <button class="func" data-value="√(">√</button>
+
+      <!-- Row 3 -->
+      <button class="num" data-value="7">7</button>
+      <button class="num" data-value="8">8</button>
+      <button class="num" data-value="9">9</button>
+      <button class="op" data-value="÷">÷</button>
+      <button class="op" data-value="^">^</button>
+      <button class="op" data-value="%">%</button>
+
+      <!-- Row 4 -->
+      <button class="num" data-value="4">4</button>
+      <button class="num" data-value="5">5</button>
+      <button class="num" data-value="6">6</button>
+      <button class="op" data-value="×">×</button>
+      <button class="func" data-value="!">x!</button>
+      <button class="toggle" data-action="toggleMode">RAD</button>
+
+      <!-- Row 5 -->
+      <button class="num" data-value="1">1</button>
+      <button class="num" data-value="2">2</button>
+      <button class="num" data-value="3">3</button>
+      <button class="op" data-value="−">−</button>
+      <button class="func" data-action="ans">ANS</button>
+      <button disabled style="background:transparent;border:none;cursor:default;"></button>
+
+      <!-- Row 6 -->
+      <button class="num" data-value="0">0</button>
+      <button class="num" data-value=".">.</button>
+      <button class="equal" data-action="equals">=</button>
+      <button class="op" data-value="+">+</button>
+      <button disabled style="background:transparent;border:none;cursor:default;"></button>
+    </div>
+  </div>
+
+  <script>
+    (() => {
+      const display = document.getElementById('display');
+      const buttons = document.querySelectorAll('.buttons button');
+
+      let expression = '';
+      let lastAnswer = '0';
+      let isDegree = false; // false => radian; true => degree
+
+      // Helper math functions with degree support
+      const trig = fn => x => (isDegree ? fn(x * Math.PI / 180) : fn(x));
+      const sin = trig(Math.sin);
+      const cos = trig(Math.cos);
+      const tan = trig(Math.tan);
+      const asin = trig(Math.asin);
+      const acos = trig(Math.acos);
+      const atan = trig(Math.atan);
+
+      const factorial = n => {
+        if (n < 0) return NaN;
+        if (n === 0 || n === 1) return 1;
+        let res = 1;
+        for (let i = 2; i <= n; i++) res *= i;
+        return res;
+      };
+
+      const updateDisplay = () => {
+        display.textContent = expression || '0';
+      };
+
+      const append = val => {
+        expression += val;
+        updateDisplay();
+      };
+
+      const clear = () => {
+        expression = '';
+        updateDisplay();
+      };
+
+      const del = () => {
+        expression = expression.slice(0, -1);
+        updateDisplay();
+      };
+
+      const toggleMode = btn => {
+        isDegree = !isDegree;
+        btn.textContent = isDegree ? 'DEG' : 'RAD';
+      };
+
+      const compute = () => {
+        try {
+          let expr = expression;
+          // Substitute constants
+          expr = expr.replace(/π/g, 'Math.PI');
+          expr = expr.replace(/e/g, 'Math.E');
+
+          // Substitute factorial (number!)
+          expr = expr.replace(/(\d+(?:\.\d+)?)!/g, 'factorial($1)');
+
+          // Substitute powers (x^y)
+          expr = expr.replace(/(\d+(?:\.\d+)?|[A-Za-z]+)\^(\d+(?:\.\d+)?)/g, 'Math.pow($1,$2)');
+
+          // Replace operators symbols
+          expr = expr.replace(/÷/g, '/').replace(/×/g, '*').replace(/−/g, '-');
+          expr = expr.replace(/%/g, '/100');
+
+          // Functions mapping
+          expr = expr.replace(/sin\(/g, 'sin(');
+          expr = expr.replace(/cos\(/g, 'cos(');
+          expr = expr.replace(/tan\(/g, 'tan(');
+          expr = expr.replace(/ln\(/g, 'Math.log(');
+          expr = expr.replace(/log\(/g, 'Math.log10(');
+          expr = expr.replace(/√\(/g, 'Math.sqrt(');
+
+          // Evaluate safely
+          const result = Function('sin,cos,tan,asin,acos,atan,factorial,Math','"use strict";return (' + expr + ')')(sin,cos,tan,asin,acos,atan,factorial,Math);
+
+          lastAnswer = String(result);
+          expression = lastAnswer;
+          updateDisplay();
+        } catch (err) {
+          expression = 'Error';
+          updateDisplay();
+          expression = '';
+        }
+      };
+
+      const handleAns = () => {
+        append(lastAnswer);
+      };
+
+      // Attach listeners
+      buttons.forEach(btn => {
+        const val = btn.dataset.value;
+        const action = btn.dataset.action;
+
+        if (val) {
+          btn.addEventListener('click', () => append(val));
+        } else if (action) {
+          switch (action) {
+            case 'clear':
+              btn.addEventListener('click', clear);
+              break;
+            case 'del':
+              btn.addEventListener('click', del);
+              break;
+            case 'equals':
+              btn.addEventListener('click', compute);
+              break;
+            case 'toggleMode':
+              btn.addEventListener('click', () => toggleMode(btn));
+              break;
+            case 'ans':
+              btn.addEventListener('click', handleAns);
+              break;
+            default:
+              break;
+          }
+        }
+      });
+
+      updateDisplay();
+    })();
+  </script>
+</body>
+</html>
