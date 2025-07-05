@@ -15,6 +15,10 @@ function evaluate(expression, { degree = false } = {}) {
     return res;
   };
 
+  const nPr = (n, r) => factorial(n) / factorial(n - r);
+  const nCr = (n, r) => nPr(n, r) / factorial(r);
+  const rand = () => Math.random();
+
   let expr = String(expression);
   expr = expr.replace(/π/g, 'Math.PI');
   expr = expr.replace(/e/g, 'Math.E');
@@ -28,8 +32,11 @@ function evaluate(expression, { degree = false } = {}) {
   expr = expr.replace(/ln\(/g, 'Math.log(');
   expr = expr.replace(/log\(/g, 'Math.log10(');
   expr = expr.replace(/√\(/g, 'Math.sqrt(');
+  expr = expr.replace(/abs\(/g, 'Math.abs(');
+  expr = expr.replace(/nPr\(/g, 'nPr(');
+  expr = expr.replace(/nCr\(/g, 'nCr(');
 
-  return Function('sin,cos,tan,asin,acos,atan,factorial,Math', '"use strict";return (' + expr + ')')(sin, cos, tan, asin, acos, atan, factorial, Math);
+  return Function('sin,cos,tan,asin,acos,atan,factorial,nPr,nCr,rand,Math', '"use strict";return (' + expr + ')')(sin, cos, tan, asin, acos, atan, factorial, nPr, nCr, rand, Math);
 }
 
 module.exports = { evaluate };

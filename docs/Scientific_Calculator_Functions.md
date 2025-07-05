@@ -1,6 +1,6 @@
 # Scientific Calculator Functions
 
-A scientific calculator is a powerful tool for students and professionals in various fields. It goes far beyond the basic arithmetic of a standard calculator, offering a wide array of functions to tackle complex mathematical, scientific, and engineering problems. Here's a comprehensive list of the functions you'll typically find on a scientific calculator, broken down by category.
+A scientific calculator is a powerful tool for students and professionals in various fields. It goes far beyond the basic arithmetic of a standard calculator, offering a wide array of functions to tackle complex mathematical, scientific, and engineering problems. Here's a comprehensive list of the functions you'll typically find on a scientific calculator, broken down by category. The latest version of **SciCalx** now includes inverse trigonometric functions, permutations, combinations, absolute value, and random number generation.
 
 ---
 

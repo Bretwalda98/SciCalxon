@@ -117,14 +117,22 @@
       <button class="num" data-value="3">3</button>
       <button class="op" data-value="−">−</button>
       <button class="func" data-action="ans">ANS</button>
-      <button disabled style="background:transparent;border:none;cursor:default;"></button>
+      <button class="func" data-value="abs(">ABS</button>
 
       <!-- Row 6 -->
       <button class="num" data-value="0">0</button>
       <button class="num" data-value=".">.</button>
       <button class="equal" data-action="equals">=</button>
       <button class="op" data-value="+">+</button>
-      <button disabled style="background:transparent;border:none;cursor:default;"></button>
+      <button class="func" data-value="rand()">RND</button>
+
+      <!-- Row 7 -->
+      <button class="func" data-value="asin(">asin</button>
+      <button class="func" data-value="acos(">acos</button>
+      <button class="func" data-value="atan(">atan</button>
+      <button class="func" data-value="nPr(">nPr</button>
+      <button class="func" data-value="nCr(">nCr</button>
+      <button class="op" data-value="^2">x²</button>
     </div>
   </div>
 
@@ -153,6 +161,10 @@
         for (let i = 2; i <= n; i++) res *= i;
         return res;
       };
+
+      const nPr = (n, r) => factorial(n) / factorial(n - r);
+      const nCr = (n, r) => nPr(n, r) / factorial(r);
+      const rand = () => Math.random();
 
       const escapeForKatex = str =>
         str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
@@ -206,9 +218,12 @@
           expr = expr.replace(/ln\(/g, 'Math.log(');
           expr = expr.replace(/log\(/g, 'Math.log10(');
           expr = expr.replace(/√\(/g, 'Math.sqrt(');
+          expr = expr.replace(/abs\(/g, 'Math.abs(');
+          expr = expr.replace(/nPr\(/g, 'nPr(');
+          expr = expr.replace(/nCr\(/g, 'nCr(');
 
           // Evaluate safely
-          const result = Function('sin,cos,tan,asin,acos,atan,factorial,Math','"use strict";return (' + expr + ')')(sin,cos,tan,asin,acos,atan,factorial,Math);
+          const result = Function('sin,cos,tan,asin,acos,atan,factorial,nPr,nCr,rand,Math','"use strict";return (' + expr + ')')(sin,cos,tan,asin,acos,atan,factorial,nPr,nCr,rand,Math);
 
           lastAnswer = String(result);
           expression = lastAnswer;
