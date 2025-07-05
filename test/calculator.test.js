@@ -1,0 +1,18 @@
+const test = require('node:test');
+const assert = require('node:assert');
+const { evaluate } = require('../calculator');
+
+test('basic operations', () => {
+  assert.equal(evaluate('2+3*4'), 14);
+  assert.equal(evaluate('10/2-3'), 2);
+});
+
+test('factorial', () => {
+  assert.equal(evaluate('3!'), 6);
+});
+
+test('trigonometric', () => {
+  assert.equal(evaluate('sin(0)'), 0);
+  assert.ok(Math.abs(evaluate('sin(90)', { degree: true }) - 1) < 1e-10);
+  assert.equal(evaluate('cos(0)'), 1);
+});

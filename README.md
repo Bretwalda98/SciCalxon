@@ -106,6 +106,19 @@ Please adhere to the existing code style and include tests where applicable.
 
 ---
 
+## 🧪 Testing
+
+This project uses Node's built‑in test runner. After cloning the repository,
+run:
+
+```bash
+npm test
+```
+
+The command executes all files in the `test` folder and prints the results.
+
+---
+
 ## 📝 License
 
 This project is licensed under the **MIT License**. See [LICENSE](LICENSE) for details.
