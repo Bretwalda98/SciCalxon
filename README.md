@@ -1,4 +1,4 @@
-# SciCalx
+# SciCalxon
 
 **Web‑based Casio‑style scientific calculator** built with plain HTML, CSS, and JavaScript.
 
@@ -9,7 +9,7 @@
 A live version is available via GitHub Pages:
 
 ```
-https://bretwalda98.github.io/scicalx/
+https://bretwalda98.github.io/scicalxon/
 ```
 
 ---
@@ -33,12 +33,12 @@ https://bretwalda98.github.io/scicalx/
 1. **Clone** this repository:
 
    ```bash
-   git clone https://github.com/Bretwalda98/scicalx.git
+   git clone https://github.com/Bretwalda98/scicalxon.git
    ```
 2. **Open** the project folder and simply launch the HTML file:
 
    ```bash
-   cd scicalx
+   cd scicalxon
    open index.html   # or just double‑click in your file browser
    ```
 
