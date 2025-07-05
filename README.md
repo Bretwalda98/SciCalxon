@@ -54,6 +54,44 @@ No build steps or dependencies required.
 
 ---
 
+## 🛠 Customization
+
+The calculator is a single HTML file, `casio_calculator.html`. Both the styles
+and the JavaScript logic live inside this file:
+
+* **CSS** is defined in a `<style>` block near the top of the `<head>` section
+  (around lines 8–73). This controls the grid layout, button colors and overall
+  look of the calculator.
+* **JavaScript** resides in a `<script>` block just before the closing
+  `</body>` tag (around lines 160 onward). It handles button clicks, expression
+  parsing and math functions.
+
+To rearrange or add buttons, edit the markup inside the `<div class="buttons">`
+element. Each `<button>` uses the `data-value` or `data-action` attributes so
+that the script knows how to process clicks. Adding new buttons or changing the
+grid layout only requires modifying this HTML section.
+
+### Adding a textbook display
+
+For formatted math (fractions, superscripts, etc.) you can use [KaTeX]. Include
+the CDN links below **after** the existing `<style>` block and before the
+calculator's `<script>`:
+
+```html
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+```
+
+Then update the JavaScript `updateDisplay` function to render the current
+expression with `katex.render`. This allows a "textbook" style output while the
+underlying math engine stays the same.
+
+Dependencies required for the textbook display:
+
+* **KaTeX** — used for typesetting mathematical expressions.
+
+---
+
 ## 🤝 Contributing
 
 Contributions, issues, and feature requests are welcome!
