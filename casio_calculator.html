@@ -5,6 +5,8 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Casio‑Style Scientific Calculator</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.7/dist/katex.min.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.7/dist/katex.min.js"></script>
   <style>
     /* --- Reset & Layout -------------------------------------------------- */
     *, *::before, *::after { box-sizing: border-box; }
@@ -152,8 +154,12 @@
         return res;
       };
 
+      const escapeForKatex = str =>
+        str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+
       const updateDisplay = () => {
-        display.textContent = expression || '0';
+        const expr = expression || '0';
+        katex.render(escapeForKatex(expr), display, { throwOnError: false });
       };
 
       const append = val => {
