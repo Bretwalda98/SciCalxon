@@ -1,0 +1,13 @@
+{
+  "name": "scicalxon",
+  "version": "1.0.0",
+  "description": "**Web‑based Casio‑style scientific calculator** built with plain HTML, CSS, and JavaScript.",
+  "main": "index.js",
+  "scripts": {
+    "test": "node --test"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs"
+}
