@@ -1,6 +1,6 @@
 # Scientific Calculator Functions
 
-A scientific calculator is a powerful tool for students and professionals in various fields. It goes far beyond the basic arithmetic of a standard calculator, offering a wide array of functions to tackle complex mathematical, scientific, and engineering problems. Here's a comprehensive list of the functions you'll typically find on a scientific calculator, broken down by category.
+A scientific calculator is a powerful tool for students and professionals in various fields. It goes far beyond the basic arithmetic of a standard calculator, offering a wide array of functions to tackle complex mathematical, scientific, and engineering problems. Here's a comprehensive list of the functions you'll typically find on a scientific calculator, broken down by category. The latest version of **SciCalx** now includes inverse and hyperbolic trigonometric functions, permutations, combinations, absolute value, and random number generation, including random integers.
 
 ---
 
@@ -72,7 +72,7 @@ These functions are used for data analysis and to calculate the likelihood of ev
 | **Summation** | `Σx`, `Σx²` | Calculates the sum and the sum of the squares of a dataset. |
 | **Permutation** | `nPr` | Calculates the number of ways to arrange a subset of items from a larger set. |
 | **Combination** | `nCr` | Calculates the number of ways to choose a subset of items from a larger set, regardless of order. |
-| **Random Number Generation** | `Ran#`, `RAND` | Generates a random number, typically between 0 and 1. |
+| **Random Number Generation** | `Ran#`, `RAND`, `RanInt` | Generates a random number between 0 and 1 or a random integer in a range. |
 
 ---
 

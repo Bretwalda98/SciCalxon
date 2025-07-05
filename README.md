@@ -17,9 +17,12 @@ https://bretwalda98.github.io/scicalx/
 ## ⚙️ Features
 
 * **Basic operations**: Addition, subtraction, multiplication, division
-* **Advanced functions**: Exponentiation (xʸ), square root, percentage, factorial
-* **Trigonometry**: sin, cos, tan with RAD/DEG mode toggle
+* **Advanced functions**: Exponentiation (xʸ), square root, percentage, factorial, absolute value
+* **Trigonometry**: sin, cos, tan with RAD/DEG mode toggle and inverse functions (asin, acos, atan)
+* **Hyperbolic**: `sinh`, `cosh`, `tanh` with inverses `asinh`, `acosh`, `atanh`
 * **Logarithms**: Natural log (ln), base‑10 log (log)
+* **Permutations & combinations**: `nPr`, `nCr`
+* **Random numbers**: `rand()`, `randInt(a,b)`
 * **Constants**: π (pi), e (Euler’s number)
 * **Parentheses**: Nested expressions
 * **ANS recall**: Reuse last result

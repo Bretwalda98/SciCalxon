@@ -117,14 +117,33 @@
       <button class="num" data-value="3">3</button>
       <button class="op" data-value="−">−</button>
       <button class="func" data-action="ans">ANS</button>
-      <button disabled style="background:transparent;border:none;cursor:default;"></button>
+      <button class="func" data-value="abs(">ABS</button>
 
       <!-- Row 6 -->
       <button class="num" data-value="0">0</button>
       <button class="num" data-value=".">.</button>
       <button class="equal" data-action="equals">=</button>
       <button class="op" data-value="+">+</button>
-      <button disabled style="background:transparent;border:none;cursor:default;"></button>
+      <button class="func" data-value="rand()">RND</button>
+
+      <!-- Row 7 -->
+      <button class="func" data-value="asin(">asin</button>
+      <button class="func" data-value="acos(">acos</button>
+      <button class="func" data-value="atan(">atan</button>
+      <button class="func" data-value="nPr(">nPr</button>
+      <button class="func" data-value="nCr(">nCr</button>
+      <button class="op" data-value="^2">x²</button>
+
+      <!-- Row 8 -->
+      <button class="func" data-value="sinh(">sinh</button>
+      <button class="func" data-value="cosh(">cosh</button>
+      <button class="func" data-value="tanh(">tanh</button>
+      <button class="func" data-value="asinh(">asinh</button>
+      <button class="func" data-value="acosh(">acosh</button>
+      <button class="func" data-value="atanh(">atanh</button>
+
+      <!-- Row 9 -->
+      <button class="func" data-value="randInt(">RINT</button>
     </div>
   </div>
 
@@ -145,6 +164,12 @@
       const asin = trig(Math.asin);
       const acos = trig(Math.acos);
       const atan = trig(Math.atan);
+      const sinh = trig(Math.sinh);
+      const cosh = trig(Math.cosh);
+      const tanh = trig(Math.tanh);
+      const asinh = trig(Math.asinh);
+      const acosh = trig(Math.acosh);
+      const atanh = trig(Math.atanh);
 
       const factorial = n => {
         if (n < 0) return NaN;
@@ -152,6 +177,15 @@
         let res = 1;
         for (let i = 2; i <= n; i++) res *= i;
         return res;
+      };
+
+      const nPr = (n, r) => factorial(n) / factorial(n - r);
+      const nCr = (n, r) => nPr(n, r) / factorial(r);
+      const rand = () => Math.random();
+      const randInt = (a, b) => {
+        const min = Math.ceil(a);
+        const max = Math.floor(b);
+        return Math.floor(Math.random() * (max - min + 1)) + min;
       };
 
       const escapeForKatex = str =>
@@ -203,12 +237,23 @@
           expr = expr.replace(/sin\(/g, 'sin(');
           expr = expr.replace(/cos\(/g, 'cos(');
           expr = expr.replace(/tan\(/g, 'tan(');
+          expr = expr.replace(/sinh\(/g, 'sinh(');
+          expr = expr.replace(/cosh\(/g, 'cosh(');
+          expr = expr.replace(/tanh\(/g, 'tanh(');
+          expr = expr.replace(/asinh\(/g, 'asinh(');
+          expr = expr.replace(/acosh\(/g, 'acosh(');
+          expr = expr.replace(/atanh\(/g, 'atanh(');
           expr = expr.replace(/ln\(/g, 'Math.log(');
           expr = expr.replace(/log\(/g, 'Math.log10(');
           expr = expr.replace(/√\(/g, 'Math.sqrt(');
+          expr = expr.replace(/abs\(/g, 'Math.abs(');
+          expr = expr.replace(/nPr\(/g, 'nPr(');
+          expr = expr.replace(/nCr\(/g, 'nCr(');
+          expr = expr.replace(/randInt\(/g, 'randInt(');
 
           // Evaluate safely
-          const result = Function('sin,cos,tan,asin,acos,atan,factorial,Math','"use strict";return (' + expr + ')')(sin,cos,tan,asin,acos,atan,factorial,Math);
+          const result = Function('sin,cos,tan,asin,acos,atan,sinh,cosh,tanh,asinh,acosh,atanh,factorial,nPr,nCr,rand,randInt,Math',
+            '"use strict";return (' + expr + ')')(sin,cos,tan,asin,acos,atan,sinh,cosh,tanh,asinh,acosh,atanh,factorial,nPr,nCr,rand,randInt,Math);
 
           lastAnswer = String(result);
           expression = lastAnswer;
