@@ -23,6 +23,7 @@ https://bretwalda98.github.io/scicalx/
 * **Constants**: π (pi), e (Euler’s number)
 * **Parentheses**: Nested expressions
 * **ANS recall**: Reuse last result
+* **Secure evaluation**: Expressions are parsed by a small built-in parser instead of using dynamic code execution
 * **Responsive UI**: Grid layout, color‑coded keys, styled display
 
 ---
