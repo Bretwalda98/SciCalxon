@@ -24,6 +24,7 @@ https://bretwalda98.github.io/scicalx/
 * **Parentheses**: Nested expressions
 * **ANS recall**: Reuse last result
 * **Responsive UI**: Grid layout, color‑coded keys, styled display
+* **Comprehensive function list**: see [Scientific Calculator Functions](docs/Scientific_Calculator_Functions.md)
 
 ---
 
